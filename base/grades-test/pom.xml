@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<parent>
+		<artifactId>base</artifactId>
+		<groupId>il.ac.technion.cs.sd</groupId>
+		<version>1.0</version>
+	</parent>
+	<description>The staff will use this module to test your application.</description>
+	<modelVersion>4.0.0</modelVersion>
+	<dependencies>
+		<dependency>
+			<groupId>il.ac.technion.cs.sd</groupId>
+			<artifactId>grades-app</artifactId>
+			<version>1.0</version>
+		</dependency>
+	</dependencies>
+	<artifactId>grades-test</artifactId>
+</project>
