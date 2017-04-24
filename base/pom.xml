@@ -22,7 +22,7 @@
 					<descriptors>
 						<descriptor>src/assembly/project.xml</descriptor>
 					</descriptors>
-					<finalName>Grades-id1-id2</finalName>
+					<finalName>Grades-203906425-307270215</finalName>
 				</configuration>
 				<executions>
 					<execution>
