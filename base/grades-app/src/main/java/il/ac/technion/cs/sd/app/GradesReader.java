@@ -17,14 +17,13 @@ public class GradesReader {
     List<String> names = new ArrayList<String>();
     names.add("ID");
     names.add("Grade");
-    DataBase DB = new DataBase(2,names);
+    DataBase DB = new DataBase(names);
 
-    Optional<String> res = DB.get_val_from_column(id,names.get(1));
+    Optional<String> res = DB.get_val_from_column_by_name(id,names.get(1));
     if(res.equals(Optional.empty()))
       return OptionalInt.empty();
     else
     {
-
       Integer res_int = Integer.parseInt(res.get());
       return OptionalInt.of(res_int);
     }

@@ -2,6 +2,7 @@ package il.ac.technion.cs.sd.app;
 
 
 import db_utils.DataBase;
+import db_utils.StorageInterface;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -13,7 +14,25 @@ public class GradesInitializer {
    * Saves the csvData persistently, so that it could be run using GradesRunner.
    * The format of each line of the data is $id,$grade.
    */
+
   public void setup(String csvData) {
+      /**
+       * No need for data check, promised by instructor that all data is legal
+       */
+      List<String> names = new ArrayList<String>();
+      names.add("ID");
+      names.add("Grade");
+      DataBase DB = new DataBase(names);
+      DB.build_db(csvData);
+
+  }
+
+
+
+
+
+
+ /* public void setup(String csvData) {
     List<String> names = new ArrayList<String>();
     names.add("ID");
     names.add("Grade");
@@ -28,4 +47,5 @@ public class GradesInitializer {
 
     DB.write_to_disk();
   }
+  */
 }
