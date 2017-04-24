@@ -1,11 +1,7 @@
 package db_utils;
 
-import com.sun.javaws.exceptions.InvalidArgumentException;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mock;
+
 import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
@@ -32,8 +28,8 @@ public class DataBaseTest {
 
         StorageInterface si = Mockito.mock(DefaultStorageImplament.class);
 
-        Mockito.when(si.numberOfLines()).thenReturn(file.size());
-        Mockito.doAnswer(new Answer() {
+
+        Mockito.doAnswer(new Answer(){
             @Override
             public Object answer(InvocationOnMock invocationOnMock) throws Throwable {
                 file.add(invocationOnMock.getArgument(0));
@@ -49,14 +45,16 @@ public class DataBaseTest {
 
         DB.build_db(csvData);
 
-        assertEquals(3,DB.size());
-        assertEquals("Benny,27",DB.get_line_by_num(0));
-        assertEquals("Nadav,25",DB.get_line_by_num(1));
-        assertEquals("Zed,65",DB.get_line_by_num(2));
+        Mockito.when(si.numberOfLines()).thenReturn(file.size());
+        Mockito.when(si.read(Mockito.anyInt())).thenAnswer(i -> file.get(i.getArgument(0)));
+
+        assertEquals(Optional.of(3),Optional.of(DB.size()));
+        assertEquals(Optional.of("Benny,27"),DB.get_line_by_num(0));
+        assertEquals(Optional.of("Zed,65"),DB.get_line_by_num(2));
         try{
             DB.get_line_by_num(4);
             fail("Exception was not thrown when expected");
-        } catch (InvalidArgumentException e)
+        } catch (IllegalArgumentException e)
         {
 
         }
@@ -72,8 +70,8 @@ public class DataBaseTest {
 
         StorageInterface si = Mockito.mock(DefaultStorageImplament.class);
 
-        Mockito.when(si.numberOfLines()).thenReturn(file.size());
-        Mockito.doAnswer(new Answer() {
+
+        Mockito.doAnswer(new Answer(){
             @Override
             public Object answer(InvocationOnMock invocationOnMock) throws Throwable {
                 file.add(invocationOnMock.getArgument(0));
@@ -88,8 +86,8 @@ public class DataBaseTest {
                 "Zed,65\n";
 
         DB.build_db(csvData);
-
-        assertEquals(3,DB.size());
+        Mockito.when(si.numberOfLines()).thenReturn(file.size());
+        assertEquals(Optional.of(3),Optional.of(DB.size()));
     }
 
 
@@ -103,7 +101,7 @@ public class DataBaseTest {
 
         StorageInterface si = Mockito.mock(DefaultStorageImplament.class);
 
-        Mockito.when(si.numberOfLines()).thenReturn(file.size());
+
         Mockito.doAnswer(new Answer() {
             @Override
             public Object answer(InvocationOnMock invocationOnMock) throws Throwable {
@@ -120,7 +118,7 @@ public class DataBaseTest {
                 "Zed,65\n";
 
         DB.build_db(csvData);
-
+        Mockito.when(si.numberOfLines()).thenReturn(file.size());
         assertEquals(Optional.of("25"),DB.get_val_from_column_by_name("Nadav",col_names.get(1)));
         assertEquals(Optional.of("Nadav"),DB.get_val_from_column_by_name("Nadav",col_names.get(0)));
         assertEquals(Optional.of("27"),DB.get_val_from_column_by_name("Benny",col_names.get(1)));
@@ -138,7 +136,7 @@ public class DataBaseTest {
 
         StorageInterface si = Mockito.mock(DefaultStorageImplament.class);
 
-        Mockito.when(si.numberOfLines()).thenReturn(file.size());
+
         Mockito.doAnswer(new Answer() {
             @Override
             public Object answer(InvocationOnMock invocationOnMock) throws Throwable {
@@ -155,15 +153,16 @@ public class DataBaseTest {
                 "Zed,65\n";
 
         DB.build_db(csvData);
-
-        assertEquals(Optional.of("25"),DB.get_val_from_column_by_name("Nadav",1));
-        assertEquals(Optional.of("Nadav"),DB.get_val_from_column_by_name("Nadav",0));
-        assertEquals(Optional.of("27"),DB.get_val_from_column_by_name("Benny",1));
-        assertEquals(Optional.of("Benny"),DB.get_val_from_column_by_name("Benny",0));
-        assertEquals(Optional.empty(),DB.get_val_from_column_by_name("Shalom",0));
+        Mockito.when(si.numberOfLines()).thenReturn(file.size());
+        assertEquals(Optional.of("25"),DB.get_val_from_column_by_colum_number("Nadav",1));
+        assertEquals(Optional.of("Nadav"),DB.get_val_from_column_by_colum_number("Nadav",0));
+        assertEquals(Optional.of("27"),DB.get_val_from_column_by_colum_number("Benny",1));
+        assertEquals(Optional.of("Benny"),DB.get_val_from_column_by_colum_number("Benny",0));
+        assertEquals(Optional.empty(),DB.get_val_from_column_by_colum_number("Shalom",0));
     }
-    }
 
+
+    /*
     @Test
     public void getNum_of_columns() throws Exception {
 
@@ -175,3 +174,6 @@ public class DataBaseTest {
 
         assertEquals(col_names.size(),DB.getNum_of_columns().intValue());
     }
+*/
+
+}

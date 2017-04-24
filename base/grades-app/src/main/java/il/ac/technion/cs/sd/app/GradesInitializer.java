@@ -27,6 +27,14 @@ public class GradesInitializer {
 
   }
 
+    public void setup(String csvData, DataBase DB) {
+        /**
+         * No need for data check, promised by instructor that all data is legal
+         */
+        DB.build_db(csvData);
+
+    }
+
 
 
 

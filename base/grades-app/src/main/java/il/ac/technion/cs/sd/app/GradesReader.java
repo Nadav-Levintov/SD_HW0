@@ -28,4 +28,17 @@ public class GradesReader {
       return OptionalInt.of(res_int);
     }
   }
+
+  public OptionalInt getGrade(String id,DataBase DB) throws InterruptedException {
+    List<String> names = DB.getNames_of_columns();
+
+    Optional<String> res = DB.get_val_from_column_by_name(id,names.get(1));
+    if(res.equals(Optional.empty()))
+      return OptionalInt.empty();
+    else
+    {
+      Integer res_int = Integer.parseInt(res.get());
+      return OptionalInt.of(res_int);
+    }
+  }
 }

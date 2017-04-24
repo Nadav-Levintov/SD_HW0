@@ -1,22 +1,25 @@
 package db_utils;
 
-import com.sun.javaws.exceptions.InvalidArgumentException;
+
 
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.TreeMap;
 
-import static java.util.Optional.empty;
-import static java.util.Optional.of;
 
 
 public class DataBase {
 
 
     protected Integer num_of_columns;
-    protected List<?> names_of_columns;
-    protected Map<String,String> DB = new TreeMap<String,String>();
+
+    public List<String> getNames_of_columns() {
+        return names_of_columns;
+    }
+
+    protected List<String> names_of_columns;
+    protected Map<String,String> DB = new TreeMap();
     protected StorageInterface storage_implament;
     public DataBase(List<String> names_of_columns){
         this.names_of_columns = names_of_columns;
@@ -84,21 +87,21 @@ public class DataBase {
             Integer compare=key.compareTo(values[0]);
             if      (compare < 0) high = mid - 1;
             else if (compare > 0) low = mid + 1;
-            else return Optional<String>.of(values[column]);
+            else return Optional.of(values[column]);
         }
-        return Optional<String>.empty();
+        return Optional.empty();
     }
 
     public Integer getNum_of_columns() {
         return num_of_columns;
     }
 
-    public Optional<String> get_line_by_num(Integer num) throws InterruptedException, InvalidArgumentException {
+    public Optional<String> get_line_by_num(Integer num) throws InterruptedException, IllegalArgumentException{
         if(num>=this.size() || num<0)
         {
-            throw new InvalidArgumentException(Integer.toString(num));
+            throw new IllegalArgumentException(Integer.toString(num));
         }
-        return Optional<String>.of(storage_implament.read(num));
+        return Optional.of(storage_implament.read(num));
     }
     /*
     public DataBase(Integer num_of_columns,List<?> names_of_columns) {
